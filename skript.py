@@ -10,6 +10,12 @@ pygame.init()
 image_of_maze = pygame.image.load("game_skript/image_menu.png")
 image_of_maze = pygame.transform.scale(image_of_maze, (1920, 1080))
 
+
+#добавили лабиринт картинку на 2экране
+image_of_maze2=pygame.image.load("game_skript/lvl1.png")
+image_of_maze2=pygame.transform.scale(image_of_maze2,(1000,1000))#установили размер для картинки лабиринта
+
+
 # Настройка экрана
 screen_info = pygame.display.Info()
 screen_width = int(screen_info.current_w * 0.96)
@@ -40,8 +46,12 @@ button_font = pygame.font.SysFont("Arial", 100)  # Название шрифта
 text_start = button_font.render("PLAY", True, White)
 text_sound=button_font.render("SOUND",True,White)
 
-image_of_maze2=pygame.image.load("game_skript/lvl1.png")
+Taylor_standing=pygame.image.load("game_skript/Taylor_standing.png")#указал путь к картинке
+Taylor_standing=pygame.transform.scale(Taylor_standing, (60,60))#указал размер картинке
+Taylor_standing=pygame.transform.rotate(Taylor_standing,(90))#изменили направление картинки на 90 градусов
 
+x = 910#переменная отвечает за координату Xперсонажа
+y = 950#переменная отвечает за координату Yперсонажа
 
 state_screen=1
 # Основной цикл
@@ -54,8 +64,9 @@ while running:
             print("Клик мыши:")
             print(event.pos[0],"клик мыши по x")
             print(event.pos[1],"клик мыши по y")
+            y=y-10
             if event.pos[0]<1230 and event.pos[0]>630 and event.pos[1]<174 and event.pos[1] > 27:
-                state_screen=2
+                state_screen=2#сменили переменную на 2 благодаря которой меняется экран
                 print(state_screen)
             if button_sound.collidepoint(event.pos):#запрограммировали нажатия по прямоугольнику с помощью collidepoint
                 print("вы нажали на sound")
@@ -72,11 +83,17 @@ while running:
         screen.blit(text_start, (button_play.x + 234, button_play.y + 20))
 
         screen.blit(text_sound,(button_sound.x+50,button_sound.y+20))
+
+
+
     if state_screen == 2 :
         screen.fill("white")
-        screen.blit(image_of_maze2,(800,450))
+        screen.blit(image_of_maze2,(400,0))
+        screen.blit(Taylor_standing,(x,y))#разместили картинку мальчика на втором экране
+
 
 
     pygame.display.flip()  # Обновление экрана
 
 pygame.quit()
+#конец кода
