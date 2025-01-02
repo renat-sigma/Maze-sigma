@@ -58,18 +58,32 @@ state_screen=1
 running = True
 while running:
     for event in pygame.event.get():#цикл for проверяет и отвечает только за СОБЫТИЯ
+        print(event)
         if event.type == pygame.QUIT:
             running = False
+        if event.type==pygame.KEYDOWN:
+            if event.key==97:
+                x=x-10
+                Taylor_standing=pygame.transform.rotate(Taylor_standing,(90))
+            if event.key==100:
+                x=x+10
+            if event.key==119:
+                y=y-10
+            if event.key==115:
+                y=y+10
+        if event.type==pygame.KEYUP:
+            print("123")
         elif event.type == MOUSEBUTTONDOWN:
             print("Клик мыши:")
             print(event.pos[0],"клик мыши по x")
             print(event.pos[1],"клик мыши по y")
-            y=y-10
             if event.pos[0]<1230 and event.pos[0]>630 and event.pos[1]<174 and event.pos[1] > 27:
                 state_screen=2#сменили переменную на 2 благодаря которой меняется экран
                 print(state_screen)
             if button_sound.collidepoint(event.pos):#запрограммировали нажатия по прямоугольнику с помощью collidepoint
                 print("вы нажали на sound")
+
+
 
     # Отображение
     if state_screen==1:
