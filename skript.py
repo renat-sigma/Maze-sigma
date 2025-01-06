@@ -52,7 +52,7 @@ Taylor_standing=pygame.transform.rotate(Taylor_standing,(90))#изменили �
 
 x = 910#переменная отвечает за координату Xперсонажа
 y = 950#переменная отвечает за координату Yперсонажа
-
+gradus_rotate=0
 state_screen=1
 # Основной цикл
 running = True
@@ -64,13 +64,16 @@ while running:
         if event.type==pygame.KEYDOWN:
             if event.key==97:
                 x=x-10
-                Taylor_standing=pygame.transform.rotate(Taylor_standing,(90))
+                gradus_rotate=90
             if event.key==100:
                 x=x+10
+                gradus_rotate=-90
             if event.key==119:
                 y=y-10
+                gradus_rotate=360
             if event.key==115:
                 y=y+10
+                gradus_rotate=0
         if event.type==pygame.KEYUP:
             print("123")
         elif event.type == MOUSEBUTTONDOWN:
@@ -83,9 +86,10 @@ while running:
             if button_sound.collidepoint(event.pos):#запрограммировали нажатия по прямоугольнику с помощью collidepoint
                 print("вы нажали на sound")
 
-
+#конец цикла for
 
     # Отображение
+    #цикл while отвечает за действие работа с картинками
     if state_screen==1:
         screen.blit(image_of_maze, (0, 0))  # Фон
 
@@ -103,6 +107,7 @@ while running:
     if state_screen == 2 :
         screen.fill("white")
         screen.blit(image_of_maze2,(400,0))
+        Taylor_standing=pygame.transform.rotate(Taylor_standing,(gradus_rotate))
         screen.blit(Taylor_standing,(x,y))#разместили картинку мальчика на втором экране
 
 
