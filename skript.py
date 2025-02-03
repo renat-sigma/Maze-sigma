@@ -46,9 +46,12 @@ button_font = pygame.font.SysFont("Arial", 100)  # Название шрифта
 text_start = button_font.render("PLAY", True, White)
 text_sound=button_font.render("SOUND",True,White)
 
-Taylor_standing=pygame.image.load("game_skript/Taylor_standing.png")#указал путь к картинке
-Taylor_standing=pygame.transform.scale(Taylor_standing, (60,60))#указал размер картинке
-Taylor_standing=pygame.transform.rotate(Taylor_standing,(90))#изменили направление картинки на 90 градусов
+player_original=pygame.image.load("game_skript/Taylor_standing.png").convert_alpha()#указал путь к картинке
+player_original=pygame.transform.scale(player_original, (60,60))#указал размер картинке
+player_width=60
+player_height=60
+
+maze_mask=pygame.mask.from_threshold(image_of_maze2,(0,0,0),(1,1,1,255))#treshold решает пропускать ли персонажа через объект или нет
 
 x = 910#переменная отвечает за координату Xперсонажа
 y = 950#переменная отвечает за координату Yперсонажа
@@ -62,6 +65,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type==pygame.KEYDOWN:
+            old_x=x
+            old_y=y
             if event.key==97:
                 x=x-10
                 gradus_rotate=90
@@ -73,7 +78,7 @@ while running:
                 gradus_rotate=360
             if event.key==115:
                 y=y+10
-                gradus_rotate=0
+                gradus_rotate=180
         if event.type==pygame.KEYUP:
             print("123")
         elif event.type == MOUSEBUTTONDOWN:
@@ -107,8 +112,9 @@ while running:
     if state_screen == 2 :
         screen.fill("white")
         screen.blit(image_of_maze2,(400,0))
-        Taylor_standing=pygame.transform.rotate(Taylor_standing,(gradus_rotate))
-        screen.blit(Taylor_standing,(x,y))#разместили картинку мальчика на втором экране
+        Taylor_standing1=pygame.transform.rotate(player_original,(gradus_rotate))
+        screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
+        player_mask = pygame.mask.from_surface(player_original)
 
 
 
