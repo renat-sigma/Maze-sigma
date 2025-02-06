@@ -116,7 +116,8 @@ while running:
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
         player_mask = pygame.mask.from_surface(player_original)
 
-
+        rotated_player=pygame.transform.rotate(player_original,gradus_rotate)
+        player_mask=pygame.mask.from_surface(rotated_player)
 
     pygame.display.flip()  # Обновление экрана
 
