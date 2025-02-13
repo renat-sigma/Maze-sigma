@@ -70,23 +70,29 @@ while running:
             old_x=x
             old_y=y
             if event.key==97:
-                x=x-10
+                x=x-1
                 gradus_rotate=180#a
 
 
             if event.key==100:
-                x=x+10
+                x=x+1
                 gradus_rotate=0#d
 
 
             if event.key==119:
-                y=y-10
+                y=y-1
                 gradus_rotate=90#w
 
 
             if event.key==115:
-                y=y+10
+                y=y+1
                 gradus_rotate=270#s
+
+            rotated_player = pygame.transform.rotate(player_original, gradus_rotate)
+            player_mask = pygame.mask.from_surface(rotated_player)  # создаем маску персонажа ВНУТРИ ЦИКЛА(чтобы она обновлялась постоянно)
+            if maze_mask.overlap_mask(player_mask,(x,y)):
+                x=old_x
+                y=old_y
 
 
         if event.type==pygame.KEYUP:
@@ -126,9 +132,6 @@ while running:
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
         player_mask = pygame.mask.from_surface(player_original)
 
-
-        rotated_player=pygame.transform.rotate(player_original,gradus_rotate)
-        player_mask=pygame.mask.from_surface(rotated_player)#создаем маску персонажа ВНУТРИ ЦИКЛА(чтобы она обновлялась постоянно)
 
 
     pygame.display.flip()  # Обновление экрана
