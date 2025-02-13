@@ -47,7 +47,7 @@ text_start = button_font.render("PLAY", True, White)
 text_sound=button_font.render("SOUND",True,White)
 
 player_original=pygame.image.load("game_skript/Taylor_standing.png").convert_alpha()#указал путь к картинке
-player_original=pygame.transform.scale(player_original, (60,60))#указал размер картинке
+player_original=pygame.transform.scale(player_original, (40,40))#указал размер картинке
 #player_original=pygame.transform.rotate(player_original,(90))
 player_width=60
 player_height=60
@@ -90,7 +90,7 @@ while running:
 
             rotated_player = pygame.transform.rotate(player_original, gradus_rotate)
             player_mask = pygame.mask.from_surface(rotated_player)  # создаем маску персонажа ВНУТРИ ЦИКЛА(чтобы она обновлялась постоянно)
-            if maze_mask.overlap_mask(player_mask,(x,y)):
+            if maze_mask.overlap(player_mask,(x,y)):
                 x=old_x
                 y=old_y
 
