@@ -48,6 +48,7 @@ text_sound=button_font.render("SOUND",True,White)
 
 player_original=pygame.image.load("game_skript/Taylor_standing.png").convert_alpha()#указал путь к картинке
 player_original=pygame.transform.scale(player_original, (60,60))#указал размер картинке
+#player_original=pygame.transform.rotate(player_original,(90))
 player_width=60
 player_height=60
 
@@ -58,6 +59,7 @@ y = 950#переменная отвечает за координату Yпер�
 gradus_rotate=0
 state_screen=1
 # Основной цикл
+
 running = True
 while running:
     for event in pygame.event.get():#цикл for проверяет и отвечает только за СОБЫТИЯ
@@ -69,16 +71,24 @@ while running:
             old_y=y
             if event.key==97:
                 x=x-10
-                gradus_rotate=90
+                gradus_rotate=180#a
+
+
             if event.key==100:
                 x=x+10
-                gradus_rotate=-90
+                gradus_rotate=0#d
+
+
             if event.key==119:
                 y=y-10
-                gradus_rotate=360
+                gradus_rotate=90#w
+
+
             if event.key==115:
                 y=y+10
-                gradus_rotate=180
+                gradus_rotate=270#s
+
+
         if event.type==pygame.KEYUP:
             print("123")
         elif event.type == MOUSEBUTTONDOWN:
@@ -116,8 +126,10 @@ while running:
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
         player_mask = pygame.mask.from_surface(player_original)
 
+
         rotated_player=pygame.transform.rotate(player_original,gradus_rotate)
-        player_mask=pygame.mask.from_surface(rotated_player)
+        player_mask=pygame.mask.from_surface(rotated_player)#создаем маску персонажа ВНУТРИ ЦИКЛА(чтобы она обновлялась постоянно)
+
 
     pygame.display.flip()  # Обновление экрана
 
