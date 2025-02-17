@@ -13,7 +13,7 @@ image_of_maze = pygame.transform.scale(image_of_maze, (1920, 1080))
 
 #добавили лабиринт картинку на 2экране
 image_of_maze2=pygame.image.load("game_skript/lvl1.png")
-image_of_maze2=pygame.transform.scale(image_of_maze2,(1000,1000))#установили размер для картинки лабиринта
+image_of_maze2=pygame.transform.scale(image_of_maze2,(1900,1060))#установили размер для картинки лабиринта
 
 
 # Настройка экрана
@@ -51,7 +51,7 @@ player_original=pygame.transform.scale(player_original, (40,40))#указал р
 #player_original=pygame.transform.rotate(player_original,(90))
 player_width=60
 player_height=60
-
+#шаг1 создли маску для стен лабиринта
 maze_mask=pygame.mask.from_threshold(image_of_maze2,(0,0,0),(1,1,1,255))#treshold решает пропускать ли персонажа через объект или нет
 
 x = 910#переменная отвечает за координату Xперсонажа
@@ -70,26 +70,27 @@ while running:
             old_x=x
             old_y=y
             if event.key==97:
-                x=x-1
+                x=x-39
                 gradus_rotate=180#a
 
 
             if event.key==100:
-                x=x+1
+                x=x+39
                 gradus_rotate=0#d
 
 
             if event.key==119:
-                y=y-1
+                y=y-39
                 gradus_rotate=90#w
 
 
             if event.key==115:
-                y=y+1
-                gradus_rotate=270#s
+                y=y+39
+
 
             rotated_player = pygame.transform.rotate(player_original, gradus_rotate)
             player_mask = pygame.mask.from_surface(rotated_player)  # создаем маску персонажа ВНУТРИ ЦИКЛА(чтобы она обновлялась постоянно)
+            #с помощью old_x и old_y после столкновения возвращаяем персонажа в предыдущее положение
             if maze_mask.overlap(player_mask,(x,y)):
                 x=old_x
                 y=old_y
@@ -124,14 +125,15 @@ while running:
         screen.blit(text_sound,(button_sound.x+50,button_sound.y+20))
 
 
-
     if state_screen == 2 :
         screen.fill("white")
-        screen.blit(image_of_maze2,(400,0))
+        screen.blit(image_of_maze2,(0,0))
         Taylor_standing1=pygame.transform.rotate(player_original,(gradus_rotate))
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
+        #шаг2 создали маску для персонажа
         player_mask = pygame.mask.from_surface(player_original)
-
+        if x>806 and x<936 and y>3 and y<30:
+            print("вы прошли игру!")
 
 
     pygame.display.flip()  # Обновление экрана
