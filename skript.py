@@ -1,7 +1,7 @@
 from operator import index
 
-import pygame
-from pygame import MOUSEBUTTONDOWN
+import pygame#импортировали библиотеку pygame
+from pygame import MOUSEBUTTONDOWN#импортировали модуль MOUSEBUTTONDOWN
 
 # Инициализация Pygame
 pygame.init()
@@ -12,7 +12,7 @@ image_of_maze = pygame.transform.scale(image_of_maze, (1920, 1080))
 
 
 #добавили лабиринт картинку на 2экране
-image_of_maze2=pygame.image.load("game_skript/lvl1.png")
+image_of_maze2=pygame.image.load("game_skript/lvl1.png")#указал путь к картинке
 image_of_maze2=pygame.transform.scale(image_of_maze2,(1900,1060))#установили размер для картинки лабиринта
 
 
@@ -24,12 +24,12 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("hi")
 
 # Цвета
-Green = (255, 255, 255)
-White = (255, 255, 255)
+Green = (255, 255, 255)#сохранили цвета RGB
+White = (255, 255, 255)#сохранили цвета RGB
 Transparent = (0, 0, 0, 0)
 
 # Прямоугольник кнопки PLAY
-button_play = pygame.Rect(600, 30, 600, 140)
+button_play = pygame.Rect(600, 30, 600, 140)#указали размеры кнопки play
 
 button_sound=pygame.Rect(1400,800,400,200)#создали обычный прямоугольник(1)
 
@@ -56,19 +56,19 @@ maze_mask=pygame.mask.from_threshold(image_of_maze2,(0,0,0),(1,1,1,255))#treshol
 
 x = 910#переменная отвечает за координату Xперсонажа
 y = 950#переменная отвечает за координату Yперсонажа
-gradus_rotate=0
-state_screen=1
+gradus_rotate=0#с помощью этой переменной делаем вращение персонажу
+state_screen=1#создали переменную для смены экранов
 # Основной цикл
 
 running = True
-while running:
+while running:#создали главный цикл
     for event in pygame.event.get():#цикл for проверяет и отвечает только за СОБЫТИЯ
         print(event)
         if event.type == pygame.QUIT:
             running = False
-        if event.type==pygame.KEYDOWN:
-            old_x=x
-            old_y=y
+        if event.type==pygame.KEYDOWN:#проверяем через ключ нажатой буквы
+            old_x=x#создали старую версию координат x чтобы при столкновения персонажа и стенки возвращать персонажа в старые координаты
+            old_y=y#создали старую версию координат y чтобы при столкновения персонажа и стенки возвращать персонажа в старые координаты
             if event.key==97:
                 x=x-39
                 gradus_rotate=180#a
@@ -85,7 +85,7 @@ while running:
 
 
             if event.key==115:
-                y=y+39
+                y=y+39#s
 
 
             rotated_player = pygame.transform.rotate(player_original, gradus_rotate)
@@ -96,9 +96,9 @@ while running:
                 y=old_y
 
 
-        if event.type==pygame.KEYUP:
+        if event.type==pygame.KEYUP:#если клавиша вернулась после нажатия
             print("123")
-        elif event.type == MOUSEBUTTONDOWN:
+        elif event.type == MOUSEBUTTONDOWN:#если клавиша нажата
             print("Клик мыши:")
             print(event.pos[0],"клик мыши по x")
             print(event.pos[1],"клик мыши по y")
@@ -112,7 +112,7 @@ while running:
 
     # Отображение
     #цикл while отвечает за действие работа с картинками
-    if state_screen==1:
+    if state_screen==1:#проверяем стоит ли первый экран
         screen.blit(image_of_maze, (0, 0))  # Фон
 
 
@@ -120,18 +120,18 @@ while running:
         screen.blit(transparent_surface, button_play.topleft)
         screen.blit(transparent_surface2,button_sound.topleft)#вывели прямоугольник на экран(шаг 4)
 
-        screen.blit(text_start, (button_play.x + 234, button_play.y + 20))
+        screen.blit(text_start, (button_play.x + 234, button_play.y + 20))#вывели на экран кнопку Play
 
-        screen.blit(text_sound,(button_sound.x+50,button_sound.y+20))
+        screen.blit(text_sound,(button_sound.x+50,button_sound.y+20))#вывели на экран кнопку Sound
 
 
-    if state_screen == 2 :
-        screen.fill("white")
-        screen.blit(image_of_maze2,(0,0))
-        Taylor_standing1=pygame.transform.rotate(player_original,(gradus_rotate))
+    if state_screen == 2 :#проверка на работу 2экрана
+        screen.fill("white")#залили фон белым
+        screen.blit(image_of_maze2,(0,0))#вывели на экран картинку лабиринта
+        Taylor_standing1=pygame.transform.rotate(player_original,(gradus_rotate))#дали персонажу возможность поворота
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
         #шаг2 создали маску для персонажа
-        player_mask = pygame.mask.from_surface(player_original)
+        player_mask = pygame.mask.from_surface(player_original)#сделали маску персонажу
         if x>806 and x<936 and y>3 and y<30:
             print("вы прошли игру!")
 
