@@ -1,7 +1,6 @@
 from operator import index
 
 import pygame#импортировали библиотеку pygame
-from pygame import MOUSEBUTTONDOWN#импортировали модуль MOUSEBUTTONDOWN
 
 # Инициализация Pygame
 pygame.init()
@@ -14,6 +13,9 @@ image_of_maze = pygame.transform.scale(image_of_maze, (1920, 1080))
 #добавили лабиринт картинку на 2экране
 image_of_maze2=pygame.image.load("game_skript/lvl1.png")#указал путь к картинке
 image_of_maze2=pygame.transform.scale(image_of_maze2,(1900,1060))#установили размер для картинки лабиринта
+
+image_of_maze3=pygame.image.load("game_skript/lvl2.png")
+image_of_maze3=pygame.transform.scale(image_of_maze3,(1920,1060))
 
 
 # Настройка экрана
@@ -53,7 +55,7 @@ player_width=60
 player_height=60
 #шаг1 создли маску для стен лабиринта
 maze_mask=pygame.mask.from_threshold(image_of_maze2,(0,0,0),(1,1,1,255))#treshold решает пропускать ли персонажа через объект или нет
-
+maze_mask1=pygame.mask.from_threshold(image_of_maze3,(0,0,0),(1,1,1,255))
 x = 910#переменная отвечает за координату Xперсонажа
 y = 950#переменная отвечает за координату Yперсонажа
 gradus_rotate=0#с помощью этой переменной делаем вращение персонажу
@@ -98,7 +100,7 @@ while running:#создали главный цикл
 
         if event.type==pygame.KEYUP:#если клавиша вернулась после нажатия
             print("123")
-        elif event.type == MOUSEBUTTONDOWN:#если клавиша нажата
+        elif event.type == pygame.MOUSEBUTTONDOWN:#если клавиша нажата
             print("Клик мыши:")
             print(event.pos[0],"клик мыши по x")
             print(event.pos[1],"клик мыши по y")
@@ -130,10 +132,19 @@ while running:#создали главный цикл
         screen.blit(image_of_maze2,(0,0))#вывели на экран картинку лабиринта
         Taylor_standing1=pygame.transform.rotate(player_original,(gradus_rotate))#дали персонажу возможность поворота
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
+        print(x,y,"ddgf")
         #шаг2 создали маску для персонажа
-        player_mask = pygame.mask.from_surface(player_original)#сделали маску персонажу
+        player_mask = pygame.mask.from_surface(player_original)#сделали маску персонаж
         if x>806 and x<936 and y>3 and y<30:
-            print("вы прошли игру!")
+            state_screen=3
+
+    if state_screen==3:
+        screen.fill("white")#залили фон белым
+        screen.blit(image_of_maze3,(0,0))#вывели на экран картинку лабиринта
+        screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
+        x=570
+        y=1000
+
 
 
     pygame.display.flip()  # Обновление экрана
