@@ -35,6 +35,8 @@ button_play = pygame.Rect(600, 30, 600, 140)#указали размеры кн�
 
 button_sound=pygame.Rect(1400,800,400,200)#создали обычный прямоугольник(1)
 
+ball_pickup_rekt = pygame.Rect(50, 50, 100, 300)
+
 # Прозрачная поверхность для кнопки PLAY
 transparent_surface = pygame.Surface((button_play.width, button_play.height), pygame.SRCALPHA)
 transparent_surface.fill((0, 0, 0, 0))  # Чёрный цвет с 50% прозрачности
@@ -48,9 +50,14 @@ button_font = pygame.font.SysFont("Arial", 100)  # Название шрифта
 text_start = button_font.render("PLAY", True, White)
 text_sound=button_font.render("SOUND",True,White)
 
+ball_pickup=pygame.image.load(("game_skript/ball.png"))
+
+
 player_original=pygame.image.load("game_skript/Taylor_standing.png").convert_alpha()#указал путь к картинке
 player_original=pygame.transform.scale(player_original, (40,40))#указал размер картинке
-#player_original=pygame.transform.rotate(player_original,(90))
+
+ball_pickup=pygame.transform.scale(ball_pickup,(50,50))
+
 player_width=60
 player_height=60
 #шаг1 создли маску для стен лабиринта
@@ -88,15 +95,17 @@ while running:#создали главный цикл
 
             if event.key==115:
                 y=y+39#s
-
+                gradus_rotate=-90
 
             rotated_player = pygame.transform.rotate(player_original, gradus_rotate)
             player_mask = pygame.mask.from_surface(rotated_player)  # создаем маску персонажа ВНУТРИ ЦИКЛА(чтобы она обновлялась постоянно)
             #с помощью old_x и old_y после столкновения возвращаяем персонажа в предыдущее положение
-            if maze_mask.overlap(player_mask,(x,y)):
+            if maze_mask.overlap(player_mask,(x,y)) and state_screen==2:
                 x=old_x
                 y=old_y
-
+            if maze_mask1.overlap(player_mask,(x,y)) and state_screen==3:
+                x=old_x
+                y=old_y
 
         if event.type==pygame.KEYUP:#если клавиша вернулась после нажатия
             print("123")
@@ -132,22 +141,25 @@ while running:#создали главный цикл
         screen.blit(image_of_maze2,(0,0))#вывели на экран картинку лабиринта
         Taylor_standing1=pygame.transform.rotate(player_original,(gradus_rotate))#дали персонажу возможность поворота
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
+        screen.blit(ball_pickup,(100,300))
         print(x,y,"ddgf")
         #шаг2 создали маску для персонажа
         player_mask = pygame.mask.from_surface(player_original)#сделали маску персонаж
         if x>806 and x<936 and y>3 and y<30:
             state_screen=3
-
+            x=570
+            y=1000
     if state_screen==3:
         screen.fill("white")#залили фон белым
         screen.blit(image_of_maze3,(0,0))#вывели на экран картинку лабиринта
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
-        x=570
-        y=1000
-
+        player_mask = pygame.mask.from_surface(player_original)
+        Taylor_standing1=pygame.transform.rotate(player_original,(gradus_rotate))
 
 
     pygame.display.flip()  # Обновление экрана
 
 pygame.quit()
 #конец кода
+
+
