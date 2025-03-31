@@ -91,7 +91,6 @@ ball_y3=random_item3[1]#выбирает первое второе из двух
 
 while running:#создали главный цикл
     for event in pygame.event.get():#цикл for проверяет и отвечает только за СОБЫТИЯ
-        print(event)
         if event.type == pygame.QUIT:
             running = False
         if event.type==pygame.KEYDOWN:#проверяем через ключ нажатой буквы
@@ -126,15 +125,9 @@ while running:#создали главный цикл
                 x=old_x
                 y=old_y
 
-        if event.type==pygame.KEYUP:#если клавиша вернулась после нажатия
-            print("123")
         elif event.type == pygame.MOUSEBUTTONDOWN:#если клавиша нажата
-            print("Клик мыши:")
-            print(event.pos[0],"клик мыши по x")
-            print(event.pos[1],"клик мыши по y")
             if event.pos[0]<1230 and event.pos[0]>630 and event.pos[1]<174 and event.pos[1] > 27:
                 state_screen=2#сменили переменную на 2 благодаря которой меняется экран
-                print(state_screen)
             if button_sound.collidepoint(event.pos):#запрограммировали нажатия по прямоугольнику с помощью collidepoint
                 print("вы нажали на sound")
 
@@ -168,13 +161,15 @@ while running:#создали главный цикл
             state_screen=3
             x=570
             y=1000
+        if x>=ball_x and x<ball_x+50 and y>=ball_y and y<ball_y+50:
+            print("it is working")
+            break
     if state_screen==3:
         screen.fill("white")#залили фон белым
         screen.blit(image_of_maze3,(0,0))#вывели на экран картинку лабиринта
         screen.blit(Taylor_standing1,(x,y))#разместили картинку мальчика на втором экране
         player_mask = pygame.mask.from_surface(player_original)
         Taylor_standing1=pygame.transform.rotate(player_original,(gradus_rotate))
-
 
     pygame.display.flip()  # Обновление экрана
 
