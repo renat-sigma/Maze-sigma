@@ -158,13 +158,15 @@ while running:#создали главный цикл
         #шаг2 создали маску для персонажа
         if x >= ball_x and x < ball_x + 50 and y >= ball_y and y < ball_y + 50:
             print("Собран мяч 1!")
-            print("it is working")
+        if x >= ball_x2 and x < ball_x2 + 50 and y >= ball_y2 and y < ball_y2 + 50:
+            print("Собран мяч 2")
+        if x >= ball_x3 and x < ball_x3 + 50 and y >= ball_y3 and y < ball_y3 + 50:
+            print("Собран мяч 3")
         player_mask = pygame.mask.from_surface(player_original)#сделали маску персонаж
         if x>806 and x<936 and y>3 and y<30:
             state_screen=3
             x=570
             y=1000
-        print(x,y)
     if state_screen==3:
         screen.fill("white")#залили фон белым
         screen.blit(image_of_maze3,(0,0))#вывели на экран картинку лабиринта
