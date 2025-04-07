@@ -89,8 +89,13 @@ ball_y2=random_item2[1]#выбирает первое второе из двух
 ball_x3=random_item3[0]#выбирает первое число из двух чисел
 ball_y3=random_item3[1]#выбирает первое второе из двух чисел
 
+ball1=pygame.Rect(ball_x,ball_y,50,50)#сделали обюъект Rect для проверки на касание игрока имяча
+ball2=pygame.Rect(ball_x2,ball_y2,50,50)#сделали обюъект Rect для проверки на касание игрока имяча
+ball3=pygame.Rect(ball_x3,ball_y3,50,50)
+
 while running:#создали главный цикл
-    for event in pygame.event.get():#цикл for проверяет и отвечает только за СОБЫТИЯ
+    player = pygame.Rect(x, y, 40, 40)
+    for event in pygame.event.get():#цикл for проверяет и отвечает только за СОБЫТИЯ(анализируем ситуауцию)
         if event.type == pygame.QUIT:
             running = False
         if event.type==pygame.KEYDOWN:#проверяем через ключ нажатой буквы
@@ -156,12 +161,12 @@ while running:#создали главный цикл
         screen.blit(ball_pickup2,(ball_x2,ball_y2))
         screen.blit(ball_pickup3,(ball_x3,ball_y3))
         #шаг2 создали маску для персонажа
-        if x >= ball_x and x < ball_x + 50 and y >= ball_y and y < ball_y + 50:
+        if ball1.colliderect(player):
             print("Собран мяч 1!")
-        if x >= ball_x2 and x < ball_x2 + 50 and y >= ball_y2 and y < ball_y2 + 50:
-            print("Собран мяч 2")
-        if x >= ball_x3 and x < ball_x3 + 50 and y >= ball_y3 and y < ball_y3 + 50:
-            print("Собран мяч 3")
+        if ball2.colliderect(player):
+            print("Собран мяч 2!")
+        if ball3.colliderect(player):
+            print("Собран мяч 3!")
         player_mask = pygame.mask.from_surface(player_original)#сделали маску персонаж
         if x>806 and x<936 and y>3 and y<30:
             state_screen=3
